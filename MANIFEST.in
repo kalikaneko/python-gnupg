@@ -13,3 +13,5 @@ prune docs/_build
 prune private
 
 global-exclude *.log *~
+include versioneer.py
+include gnupg/_version.py

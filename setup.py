@@ -36,11 +36,6 @@ else:
     _isPyPy = True
 
 
-versioneer.versionfile_source = 'gnupg/_version.py'
-versioneer.versionfile_build  = 'gnupg/_version.py'
-versioneer.tag_prefix = ''
-versioneer.parentdir_prefix = 'gnupg-'
-
 __author__ = "Isis Agora Lovecruft"
 __contact__ = 'isis@patternsinthevoid.net'
 __url__ = 'https://github.com/isislovecruft/python-gnupg'
