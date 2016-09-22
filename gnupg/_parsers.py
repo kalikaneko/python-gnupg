@@ -965,7 +965,6 @@ class ListKeys(list):
     |  crs = X.509 certificate and private key available
     |  ssb = secret subkey (secondary key)
     |  uat = user attribute (same as user id except for field 10).
-    |  rev = revocation signature
     |  pkd = public key data (special field format, see below)
     |  grp = reserved for gpgsm
     |  rvk = revocation key
@@ -980,6 +979,7 @@ class ListKeys(list):
         self.uids = []
         self.sigs = {}
         self.certs = {}
+        self.revs = {}
 
     def key(self, args):
         vars = ("""
@@ -990,11 +990,13 @@ class ListKeys(list):
             self.curkey[vars[i]] = args[i]
         self.curkey['uids'] = []
         self.curkey['sigs'] = {}
+        self.curkey['rev'] = {}
         if self.curkey['uid']:
             self.curuid = self.curkey['uid']
             self.curkey['uids'].append(self.curuid)
             self.sigs[self.curuid] = set()
             self.certs[self.curuid] = set()
+            self.revs[self.curuid] = set()
             self.curkey['sigs'][self.curuid] = []
         del self.curkey['uid']
         self.curkey['subkeys'] = []
@@ -1032,6 +1034,12 @@ class ListKeys(list):
     def sub(self, args):
         subkey = [args[4], args[11]]
         self.curkey['subkeys'].append(subkey)
+
+    def rev(self, args):
+        self.curkey['rev'] = {'keyid': args[4],
+                              'revtime': args[5],
+                              'uid': self.curuid
+                              }
 
     def _handle_status(self, key, value):
         pass
